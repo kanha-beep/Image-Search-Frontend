@@ -1,4 +1,3 @@
-// components/AddImageForm.jsx
 import React, { useState } from "react";
 import { api } from "../utils/api.js";
 import { useNavigate } from "react-router-dom";

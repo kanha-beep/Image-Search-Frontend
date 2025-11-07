@@ -36,23 +36,13 @@ export default function AllImages() {
     setSelectedImages(
       (prev) =>
         prev.includes(id)
-          ? prev.filter((img) => img !== id) // remove if already selected
-          : [...prev, id] // add if new
+          ? prev.filter((img) => img !== id)
+          : [...prev, id]
     );
   };
   const handleDelete = () => {
     console.log("deleted");
   };
-  // const handleDownload = () => {
-  //   selectedImages.forEach((url) => {
-  //     const link = document.createElement("a");
-  //     link.href = url; // image URL
-  //     link.download = url.split("/").pop(); // filename from URL
-  //     document.body.appendChild(link);
-  //     link.click();
-  //     document.body.removeChild(link);
-  //   });
-  // };
 const handleDownload = async () => {
   const selected = images.filter((img) => selectedImages.includes(img._id));
 
@@ -62,7 +52,7 @@ const handleDownload = async () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = img.imageUrl; // ✅ forces download
+    link.download = img.imageUrl;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

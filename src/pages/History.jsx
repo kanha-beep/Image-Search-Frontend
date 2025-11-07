@@ -1,4 +1,3 @@
-// In Dashboard or History component
 import { api } from "../utils/api.js";
 import { useEffect, useState } from "react";
 
