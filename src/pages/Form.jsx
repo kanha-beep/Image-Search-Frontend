@@ -22,7 +22,7 @@ const Form = () => {
     formData.append("title", term);
     console.log("image to send", formData);
     try {
-      const res = await api.post("/images/new", formData, {
+      const res = await api.post("/api/images/new", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

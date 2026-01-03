@@ -11,7 +11,7 @@ export default function SingleImages() {
   useEffect(() => {
     const getSingleImages = async () => {
       try {
-        const res = await api.get(`/images/${id}`);
+        const res = await api.get(`/api/images/${id}`);
         console.log("single image: ", res?.data);
         setImages(res?.data);
       } catch (e) {
@@ -22,7 +22,7 @@ export default function SingleImages() {
   }, []);
   const handleDelete = async () => {
     try {
-      const res = await api.delete(`/images/${id}`);
+      const res = await api.delete(`/api/images/${id}`);
       console.log("image deleted: ", res?.data);
       navigate("/allimages")
     } catch (e) {

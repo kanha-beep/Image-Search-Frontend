@@ -11,7 +11,7 @@ export default function Dashboard() {
   const handleTopSearch = async () => {
     setLoading(true);
     try {
-      const res = await api.get("/images/top-searches");
+      const res = await api.get("/api/images/top-searches");
       setTopSearch(res?.data);
     } catch (e) {
       console.log("top error: ", e?.response?.data?.message);

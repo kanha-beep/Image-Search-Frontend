@@ -19,7 +19,7 @@ export default function Auth() {
     e.preventDefault();
     if (isLogin) {
       try {
-        const res = await api.post("/auth/login", formData);
+        const res = await api.post("/api/auth/login", formData);
         console.log("user logged in: ", res?.data);
         localStorage.setItem("token", res?.data?.token);
         // localStorage.setItem("user", res?.data?.user)
@@ -30,7 +30,7 @@ export default function Auth() {
       }
     } else {
       try {
-        const res = await api.post("/auth/register", formData);
+        const res = await api.post("/api/auth/register", formData);
         console.log("user registered: ", res?.data);
         navigate("/dashboard");
         setIsLogin(true);

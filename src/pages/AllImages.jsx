@@ -13,7 +13,7 @@ export default function AllImages() {
   useEffect(() => {
     const getAllImages = async () => {
       try {
-        const res = await api.get(`/images`);
+        const res = await api.get(`/api/images`);
         console.log("all images: ", res?.data);
         setImages(res?.data);
       } catch (e) {
@@ -27,7 +27,7 @@ export default function AllImages() {
     e.preventDefault();
     try {
       console.log("search starts");
-      const res = await api.get(`/images?search=${search}`);
+      const res = await api.get(`/api/images?search=${search}`);
       console.log("search images: ", res?.data);
       setImages(res?.data);
     } catch (e) {

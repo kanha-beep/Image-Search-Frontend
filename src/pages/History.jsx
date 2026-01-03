@@ -8,7 +8,7 @@ export default function History() {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const res = await api.get("/images/history");
+        const res = await api.get("/api/images/history");
         setHistory(res.data);
       } catch (e) {
         console.log("Error fetching history:", e?.response?.data?.message);

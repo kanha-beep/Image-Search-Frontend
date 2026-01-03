@@ -29,7 +29,7 @@ export default function EditImages() {
     formData.append("image", images);
     
     try {
-      const res = await api.patch(`/images/${id}`, formData);
+      const res = await api.patch(`/api/images/${id}`, formData);
       console.log("image updated: ", res?.data);
       navigate(`/images/${id}`);
     } catch (e) {
