@@ -3,8 +3,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { api } from "../utils/api.js";
 import { useNavigate } from "react-router-dom";
-
+const API_URL = import.meta.env.VITE_API_URL;
 export default function AllImages() {
+  console.log("url: ", API_URL);
   const [selectedImages, setSelectedImages] = useState([]);
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
@@ -36,11 +37,8 @@ export default function AllImages() {
   };
 
   const toggleSelect = (id) => {
-    setSelectedImages(
-      (prev) =>
-        prev.includes(id)
-          ? prev.filter((img) => img !== id)
-          : [...prev, id]
+    setSelectedImages((prev) =>
+      prev.includes(id) ? prev.filter((img) => img !== id) : [...prev, id]
     );
   };
 
@@ -52,7 +50,9 @@ export default function AllImages() {
     const selected = images.filter((img) => selectedImages.includes(img._id));
 
     for (const img of selected) {
-      const response = await fetch(`http://localhost:3000/uploads/${img.imageUrl}`);
+      const response = await fetch(
+        `${API_URL}/uploads/${img.imageUrl}`
+      );
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -71,7 +71,9 @@ export default function AllImages() {
       <div className="row mb-4">
         <div className="col-12 text-center">
           <h1 className="display-4 fw-bold mb-3">Image Gallery</h1>
-          <p className="lead text-muted">Discover and manage your image collection</p>
+          <p className="lead text-muted">
+            Discover and manage your image collection
+          </p>
         </div>
       </div>
 
@@ -109,18 +111,19 @@ export default function AllImages() {
                   <div>
                     <h6 className="mb-0">
                       <i className="bi bi-check-circle-fill text-primary me-2"></i>
-                      {selectedImages.length} image{selectedImages.length > 1 ? 's' : ''} selected
+                      {selectedImages.length} image
+                      {selectedImages.length > 1 ? "s" : ""} selected
                     </h6>
                   </div>
                   <div className="d-flex gap-2">
-                    <button 
+                    <button
                       onClick={handleDelete}
                       className="btn btn-outline-danger btn-sm"
                     >
                       <i className="bi bi-trash me-1"></i>
                       Delete Selected
                     </button>
-                    <button 
+                    <button
                       onClick={handleDownload}
                       className="btn btn-gradient btn-sm"
                     >
@@ -140,25 +143,27 @@ export default function AllImages() {
         {images && images.length > 0 ? (
           images.map((i) => (
             <div key={i._id} className="col-sm-6 col-md-4 col-lg-3">
-              <div 
+              <div
                 className={`card image-card h-100 ${
-                  selectedImages.includes(i._id) ? 'border-primary border-3' : 'border-0'
+                  selectedImages.includes(i._id)
+                    ? "border-primary border-3"
+                    : "border-0"
                 }`}
                 onClick={() => toggleSelect(i._id)}
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: "pointer" }}
               >
                 <div className="position-relative">
                   <img
                     src={`http://localhost:3000/uploads/${i.imageUrl}`}
                     alt={i.title}
                     className="card-img-top"
-                    style={{ height: '200px', objectFit: 'cover' }}
+                    style={{ height: "200px", objectFit: "cover" }}
                   />
-                  
+
                   {/* Overlay */}
                   <div className="image-overlay">
                     <div className="text-white text-center">
-                      <button 
+                      <button
                         onClick={(e) => {
                           e.stopPropagation();
                           navigate(`/images/${i._id}`);
@@ -167,7 +172,7 @@ export default function AllImages() {
                       >
                         <i className="bi bi-eye"></i>
                       </button>
-                      <button 
+                      <button
                         onClick={(e) => {
                           e.stopPropagation();
                           navigate(`/images/${i._id}/edit`);
@@ -178,7 +183,7 @@ export default function AllImages() {
                       </button>
                     </div>
                   </div>
-                  
+
                   {/* Selection Checkbox */}
                   <div className="position-absolute top-0 end-0 p-2">
                     <input
@@ -187,17 +192,17 @@ export default function AllImages() {
                       onChange={() => toggleSelect(i._id)}
                       className="form-check-input"
                       onClick={(e) => e.stopPropagation()}
-                      style={{ transform: 'scale(1.2)' }}
+                      style={{ transform: "scale(1.2)" }}
                     />
                   </div>
                 </div>
-                
+
                 <div className="card-body">
                   <h6 className="card-title fw-bold mb-2">{i.title}</h6>
                   <div className="d-flex justify-content-between align-items-center">
                     <small className="text-muted">
                       <i className="bi bi-person me-1"></i>
-                      {i?.user?.name || 'Unknown'}
+                      {i?.user?.name || "Unknown"}
                     </small>
                     <small className="text-muted">
                       <i className="bi bi-calendar me-1"></i>
@@ -213,9 +218,11 @@ export default function AllImages() {
             <div className="text-muted">
               <i className="bi bi-images fs-1 d-block mb-3"></i>
               <h5>No Images Found</h5>
-              <p>Try adjusting your search or upload some images to get started.</p>
-              <button 
-                onClick={() => navigate('/form')}
+              <p>
+                Try adjusting your search or upload some images to get started.
+              </p>
+              <button
+                onClick={() => navigate("/form")}
                 className="btn btn-gradient"
               >
                 <i className="bi bi-plus-circle me-2"></i>
