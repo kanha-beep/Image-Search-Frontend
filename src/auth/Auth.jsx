@@ -2,7 +2,7 @@ import { useState } from "react";
 import { api } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 
-export default function Auth() {
+export default function Auth({ setIsLoggedIn, checkAuth }) {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
@@ -21,28 +21,36 @@ export default function Auth() {
       try {
         const res = await api.post("/api/auth/login", formData);
         console.log("user logged in: ", res?.data);
-        localStorage.setItem("token", res?.data?.token);
+        setIsLoggedIn(true);
         // localStorage.setItem("user", res?.data?.user)
+        await checkAuth();
         navigate("/dashboard");
       } catch (e) {
         console.log("log error: ", e?.response?.data?.message);
         setIsLogin(false);
+        setIsLoggedIn(false);
       }
     } else {
       try {
         const res = await api.post("/api/auth/register", formData);
         console.log("user registered: ", res?.data);
+        await checkAuth();
         navigate("/dashboard");
         setIsLogin(true);
+        setIsLoggedIn(true);
       } catch (e) {
         console.log("sign up error: ", e?.response?.data?.message);
         setIsLogin(false);
+        setIsLoggedIn(false);
       }
     }
   };
 
   return (
-    <div className="min-vh-100 d-flex align-items-center" style={{background: 'var(--primary-gradient)'}}>
+    <div
+      className="min-vh-100 d-flex align-items-center"
+      style={{ background: "var(--primary-gradient)" }}
+    >
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-6 col-lg-5">
@@ -56,10 +64,9 @@ export default function Auth() {
                     {isLogin ? "Welcome Back! 👋" : "Join ImageVault ✨"}
                   </h2>
                   <p className="text-muted">
-                    {isLogin 
-                      ? "Sign in to access your image collection" 
-                      : "Create an account to start uploading images"
-                    }
+                    {isLogin
+                      ? "Sign in to access your image collection"
+                      : "Create an account to start uploading images"}
                   </p>
                 </div>
 
@@ -114,15 +121,24 @@ export default function Auth() {
                     />
                   </div>
 
-                  <button type="submit" className="btn btn-gradient btn-lg w-100 fw-semibold mb-3">
-                    <i className={`bi ${isLogin ? 'bi-box-arrow-in-right' : 'bi-person-plus'} me-2`}></i>
+                  <button
+                    type="submit"
+                    className="btn btn-gradient btn-lg w-100 fw-semibold mb-3"
+                  >
+                    <i
+                      className={`bi ${
+                        isLogin ? "bi-box-arrow-in-right" : "bi-person-plus"
+                      } me-2`}
+                    ></i>
                     {isLogin ? "Sign In" : "Create Account"}
                   </button>
                 </form>
 
                 <div className="text-center">
                   <p className="mb-0">
-                    {isLogin ? "New to ImageVault?" : "Already have an account?"}
+                    {isLogin
+                      ? "New to ImageVault?"
+                      : "Already have an account?"}
                     <button
                       className="btn btn-link p-0 ms-1 text-decoration-none fw-semibold"
                       onClick={() => setIsLogin(!isLogin)}
@@ -132,7 +148,7 @@ export default function Auth() {
                   </p>
                 </div>
               </div>
-              
+
               <div className="card-footer bg-light text-center py-3">
                 <small className="text-muted">
                   <i className="bi bi-shield-check me-1"></i>

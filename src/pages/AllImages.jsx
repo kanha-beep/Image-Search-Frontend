@@ -4,7 +4,7 @@ import { useState } from "react";
 import { api } from "../utils/api.js";
 import { useNavigate } from "react-router-dom";
 const API_URL = import.meta.env.VITE_API_URL;
-export default function AllImages() {
+export default function AllImages({ isLoggedIn }) {
   console.log("url: ", API_URL);
   const [selectedImages, setSelectedImages] = useState([]);
   const navigate = useNavigate();
@@ -50,9 +50,7 @@ export default function AllImages() {
     const selected = images.filter((img) => selectedImages.includes(img._id));
 
     for (const img of selected) {
-      const response = await fetch(
-        `${API_URL}/uploads/${img.imageUrl}`
-      );
+      const response = await fetch(`${API_URL}/uploads/${img.imageUrl}`);
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -140,7 +138,7 @@ export default function AllImages() {
 
       {/* Images Grid */}
       <div className="row g-4">
-        {images && images.length > 0 ? (
+        {images && isLoggedIn && images.length > 0 ? (
           images.map((i) => (
             <div key={i._id} className="col-sm-6 col-md-4 col-lg-3">
               <div
@@ -221,13 +219,23 @@ export default function AllImages() {
               <p>
                 Try adjusting your search or upload some images to get started.
               </p>
-              <button
-                onClick={() => navigate("/form")}
-                className="btn btn-gradient"
-              >
-                <i className="bi bi-plus-circle me-2"></i>
-                Upload Images
-              </button>
+              {isLoggedIn ? (
+                <button
+                  onClick={() => navigate("/form")}
+                  className="btn btn-gradient"
+                >
+                  <i className="bi bi-plus-circle me-2"></i>
+                  Upload Images
+                </button>
+              ) : (
+                <button
+                  onClick={() => navigate("/auth")}
+                  className="btn btn-gradient"
+                >
+                  <i className="bi bi-plus-circle me-2"></i>
+                  Login
+                </button>
+              )}
             </div>
           </div>
         )}
