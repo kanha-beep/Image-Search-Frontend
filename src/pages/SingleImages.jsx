@@ -101,13 +101,13 @@ export default function SingleImages() {
                       </div>
                     </div>
                     
-                    <div className="mb-4">
+                    {/* <div className="mb-4">
                       <small className="text-muted d-block mb-1">File Name</small>
                       <div className="d-flex align-items-center">
                         <i className="bi bi-file-image me-2 text-primary"></i>
                         <span className="text-break">{images?.imageUrl}</span>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                   
                   {/* Action Buttons */}

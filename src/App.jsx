@@ -17,7 +17,7 @@ function App() {
   const checkAuth = async () => {
     try {
       const res = await api.get("/api/auth/me");
-      console.log(res?.data);
+      console.log("user app: ", res?.data);
       setUser(res?.data);
       setIsLoggedIn(true);
     } catch (e) {
