@@ -38,7 +38,7 @@ export default function AllImages({ isLoggedIn }) {
 
   const toggleSelect = (id) => {
     setSelectedImages((prev) =>
-      prev.includes(id) ? prev.filter((img) => img !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((img) => img !== id) : [...prev, id],
     );
   };
 
@@ -152,7 +152,7 @@ export default function AllImages({ isLoggedIn }) {
               >
                 <div className="position-relative">
                   <img
-                    src={`http://localhost:3000/uploads/${i.imageUrl}`}
+                    src={i.imageUrl}
                     alt={i.title}
                     className="card-img-top"
                     style={{ height: "200px", objectFit: "cover" }}
