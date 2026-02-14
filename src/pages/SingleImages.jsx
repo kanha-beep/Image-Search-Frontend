@@ -123,7 +123,7 @@ export default function SingleImages() {
                     <button 
                       onClick={() => {
                         const link = document.createElement('a');
-                        link.href = `http://localhost:3000/uploads/${images?.imageUrl}`;
+                        link.href = images.imageUrl.startsWith('http') ? images.imageUrl : `http://localhost:3000/uploads/${images.imageUrl}`;
                         link.download = images?.imageUrl;
                         link.click();
                       }}
