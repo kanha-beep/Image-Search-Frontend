@@ -59,7 +59,7 @@ export default function SingleImages() {
               <div className="card border-0 shadow-lg">
                 <div className="position-relative">
                   <img
-                    src={`http://localhost:3000/uploads/${images?.imageUrl}`}
+                    src={images?.imageUrl}
                     alt={images?.title}
                     className="card-img-top"
                     style={{ height: '500px', objectFit: 'contain', backgroundColor: '#f8f9fa' }}
@@ -117,7 +117,7 @@ export default function SingleImages() {
                       className="btn btn-gradient"
                     >
                       <i className="bi bi-pencil me-2"></i>
-                      Edit Image
+                      Change Image
                     </button>
                     
                     <button 
